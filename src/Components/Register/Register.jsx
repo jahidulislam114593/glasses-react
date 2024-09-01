@@ -1,7 +1,26 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../FirebaseProvider/FirebaseProvider";
+import { useForm } from "react-hook-form";
 
 const Register = () => {
+  const { createUser } = useContext(AuthContext);
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = (data) => {
+    const { email, password } = data;
+    createUser(email, password)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => console.log(error.message));
+  };
+
   return (
     <div className="hero bg-base-200 min-h-screen">
       <div className="hero-content flex-col lg:flex-row-reverse">
@@ -14,28 +33,32 @@ const Register = () => {
           </p>
         </div>
         <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-          <form className="card-body">
+          <form onSubmit={handleSubmit(onSubmit)} className="card-body">
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Name</span>
+                <span className="label-text">Full Name</span>
               </label>
               <input
-                type="name"
+                {...register("fullName", { required: true })}
                 placeholder="Name"
                 className="input input-bordered"
-                required
               />
+              {errors.fullName && (
+                <span className="text-red-500">This field is required</span>
+              )}
             </div>
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Email</span>
               </label>
               <input
-                type="email"
+                {...register("email", { required: true })}
                 placeholder="email"
                 className="input input-bordered"
-                required
               />
+              {errors.email && (
+                <span className="text-red-500">This field is required</span>
+              )}
             </div>
             <div className="form-control">
               <label className="label">
@@ -43,10 +66,13 @@ const Register = () => {
               </label>
               <input
                 type="password"
+                {...register("password", { required: true })}
                 placeholder="password"
                 className="input input-bordered"
-                required
               />
+              {errors.password && (
+                <span className="text-red-500">This field is required</span>
+              )}
             </div>
             <div className="form-control">
               <label className="label">
@@ -54,17 +80,23 @@ const Register = () => {
               </label>
               <input
                 type="password"
+                {...register("confirmPassword", { required: true })}
                 placeholder="confirm password"
                 className="input input-bordered"
                 required
               />
             </div>
+            {errors.confirmPassword && (
+              <span className="text-red-500">This field is required</span>
+            )}
             <div className="form-control mt-6">
               <button className="btn btn-primary">Register</button>
             </div>
             <div className="flex justify-between">
-              <p>Already Have Account?</p>
-              <Link to="/login">Login</Link>
+              <p>Have An Account?</p>
+              <small>
+                <Link to="/login">Please Login</Link>
+              </small>
             </div>
           </form>
         </div>

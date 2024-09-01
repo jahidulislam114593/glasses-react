@@ -14,6 +14,7 @@ import NotFound from "./Components/NotFound/NotFound";
 import DetailsProduct from "./Components/DetailsProduct/DetailsProduct";
 import Login from "./Components/Login/Login";
 import Register from "./Components/Register/Register";
+import FirebaseProvider from "./Components/FirebaseProvider/FirebaseProvider";
 
 const url =
   "https://my-json-server.typicode.com/faarhaan10/react-sunglasses/sunglasses";
@@ -63,6 +64,8 @@ const router = createBrowserRouter([
 ]);
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <FirebaseProvider>
+      <RouterProvider router={router} />
+    </FirebaseProvider>
   </StrictMode>
 );
