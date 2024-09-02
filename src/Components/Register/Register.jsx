@@ -1,11 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import useAuth from "../../hooks/useAuth";
 
 const Register = () => {
-  const { createUser } = useAuth();
-
+  const { createUser, updateUserProfile } = useAuth();
+  const navigate = useNavigate();
+  const from = "/";
   const {
     register,
     handleSubmit,
@@ -13,10 +14,12 @@ const Register = () => {
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
-    const { email, password } = data;
+    const { email, password, fullName, image } = data;
     createUser(email, password)
       .then((res) => {
-        console.log(res);
+        updateUserProfile(fullName, image).then(() => {
+          navigate(from);
+        });
       })
       .catch((error) => console.log(error.message));
   };
@@ -40,7 +43,7 @@ const Register = () => {
               </label>
               <input
                 {...register("fullName", { required: true })}
-                placeholder="Name"
+                placeholder="full name"
                 className="input input-bordered"
               />
               {errors.fullName && (
@@ -59,6 +62,16 @@ const Register = () => {
               {errors.email && (
                 <span className="text-red-500">This field is required</span>
               )}
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Image</span>
+              </label>
+              <input
+                {...register("image")}
+                placeholder="image"
+                className="input input-bordered"
+              />
             </div>
             <div className="form-control">
               <label className="label">

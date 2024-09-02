@@ -9,7 +9,7 @@ const Login = () => {
   const { signInUser, user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-
+  const from = location?.state || "/";
   const {
     register,
     handleSubmit,
@@ -19,13 +19,13 @@ const Login = () => {
     const { email, password } = data;
     signInUser(email, password)
       .then((res) => {
-        console.log(res);
+        navigate(from);
       })
       .catch((error) => console.log(error.message));
   };
   useEffect(() => {
     if (user) {
-      navigate(location.state);
+      navigate(from);
     }
   }, [user]);
 

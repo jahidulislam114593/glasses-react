@@ -8,31 +8,45 @@ import {
   signInWithPopup,
   FacebookAuthProvider,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 export const AuthContext = createContext(null);
 const FirebaseProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
   const googleProvider = new GoogleAuthProvider();
   const facebookProvider = new FacebookAuthProvider();
-  console.log(user);
+  // console.log(loading);
 
   //create users
   const createUser = (email, password) => {
+    setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
+  };
+
+  // update userprofile
+  const updateUserProfile = (name, image) => {
+    return updateProfile(auth.currentUser, {
+      displayName: name,
+      photoURL: image,
+    });
   };
 
   // signInUser
   const signInUser = (email, password) => {
+    setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
 
   // googleLogin
   const googleLogin = () => {
+    setLoading(true);
     return signInWithPopup(auth, googleProvider);
   };
 
   // facebookLogin
   const facebookLogin = () => {
+    setLoading(true);
     return signInWithPopup(auth, facebookProvider);
   };
 
@@ -43,12 +57,14 @@ const FirebaseProvider = ({ children }) => {
   };
   //observer
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    const unSubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
+        setLoading(false);
       } else {
       }
     });
+    return () => unSubscribe();
   }, []);
 
   //allvalues
@@ -59,6 +75,8 @@ const FirebaseProvider = ({ children }) => {
     facebookLogin,
     logout,
     user,
+    loading,
+    updateUserProfile,
   };
   return (
     <div>
