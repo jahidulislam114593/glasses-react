@@ -6,11 +6,13 @@ import {
   signInWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
+  FacebookAuthProvider,
 } from "firebase/auth";
 export const AuthContext = createContext(null);
 const FirebaseProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const googleProvider = new GoogleAuthProvider();
+  const facebookProvider = new FacebookAuthProvider();
   console.log(user);
 
   //create users
@@ -28,6 +30,11 @@ const FirebaseProvider = ({ children }) => {
     return signInWithPopup(auth, googleProvider);
   };
 
+  // facebookLogin
+  const facebookLogin = () => {
+    return signInWithPopup(auth, facebookProvider);
+  };
+
   //observer
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -43,6 +50,7 @@ const FirebaseProvider = ({ children }) => {
     createUser,
     signInUser,
     googleLogin,
+    facebookLogin,
   };
   return (
     <div>

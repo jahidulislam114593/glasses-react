@@ -1,18 +1,22 @@
 import React from "react";
-import { IoLogoGoogle } from "react-icons/io5";
-import { FaFacebook } from "react-icons/fa";
 import useAuth from "../../hooks/useAuth";
 const SocialLogin = () => {
-  const { googleLogin } = useAuth();
+  const { googleLogin, facebookLogin } = useAuth();
   return (
     <>
-      <div className="divider">continue with</div>
-      <div>
+      <div className="divider">Continue wWith</div>
+      <div className="text-center pb-4">
         <button
           onClick={() => googleLogin()}
-          className="btn btn-primary btn-sm btn-outline"
+          className="btn btn-primary btn-sm btn-outline mr-2"
         >
           Google
+        </button>
+        <button
+          onClick={() => facebookLogin()}
+          className="btn btn-primary btn-sm btn-outline"
+        >
+          Facebook
         </button>
       </div>
     </>
