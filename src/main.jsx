@@ -15,6 +15,7 @@ import DetailsProduct from "./Components/DetailsProduct/DetailsProduct";
 import Login from "./Components/Login/Login";
 import Register from "./Components/Register/Register";
 import FirebaseProvider from "./Components/FirebaseProvider/FirebaseProvider";
+import PrivateRoute from "./Components/PrivateRoute/PrivateRoute";
 
 const url =
   "https://my-json-server.typicode.com/faarhaan10/react-sunglasses/sunglasses";
@@ -36,7 +37,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/products/:id",
-        element: <DetailsProduct />,
+        element: (
+          <PrivateRoute>
+            <DetailsProduct />
+          </PrivateRoute>
+        ),
         loader: ({ params }) => fetch(`${url}/${params.id}`),
       },
       {

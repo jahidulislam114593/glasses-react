@@ -1,12 +1,14 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { useForm } from "react-hook-form";
 import SocialLogin from "../SocialLogin/SocialLogin";
 import useAuth from "../../hooks/useAuth";
 
 const Login = () => {
-  const { signInUser, googleLogin } = useAuth();
+  const { signInUser, user } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const {
     register,
@@ -21,6 +23,11 @@ const Login = () => {
       })
       .catch((error) => console.log(error.message));
   };
+  useEffect(() => {
+    if (user) {
+      navigate(location.state);
+    }
+  }, [user]);
 
   return (
     <div className="hero bg-base-200 min-h-screen">

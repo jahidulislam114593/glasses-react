@@ -7,6 +7,7 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   FacebookAuthProvider,
+  signOut,
 } from "firebase/auth";
 export const AuthContext = createContext(null);
 const FirebaseProvider = ({ children }) => {
@@ -35,6 +36,11 @@ const FirebaseProvider = ({ children }) => {
     return signInWithPopup(auth, facebookProvider);
   };
 
+  // logout
+  const logout = () => {
+    signOut(auth);
+    setUser(null);
+  };
   //observer
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -51,6 +57,8 @@ const FirebaseProvider = ({ children }) => {
     signInUser,
     googleLogin,
     facebookLogin,
+    logout,
+    user,
   };
   return (
     <div>
