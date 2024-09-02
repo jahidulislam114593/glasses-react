@@ -4,11 +4,15 @@ import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
 } from "firebase/auth";
 export const AuthContext = createContext(null);
 const FirebaseProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const googleProvider = new GoogleAuthProvider();
   console.log(user);
+
   //create users
   const createUser = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password);
@@ -17,6 +21,11 @@ const FirebaseProvider = ({ children }) => {
   // signInUser
   const signInUser = (email, password) => {
     return signInWithEmailAndPassword(auth, email, password);
+  };
+
+  // googleLogin
+  const googleLogin = () => {
+    return signInWithPopup(auth, googleProvider);
   };
 
   //observer
@@ -33,6 +42,7 @@ const FirebaseProvider = ({ children }) => {
   const allValues = {
     createUser,
     signInUser,
+    googleLogin,
   };
   return (
     <div>

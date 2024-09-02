@@ -1,10 +1,10 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../FirebaseProvider/FirebaseProvider";
 import { useForm } from "react-hook-form";
+import useAuth from "../../hooks/useAuth";
 
 const Register = () => {
-  const { createUser } = useContext(AuthContext);
+  const { createUser } = useAuth();
 
   const {
     register,
@@ -92,12 +92,13 @@ const Register = () => {
             <div className="form-control mt-6">
               <button className="btn btn-primary">Register</button>
             </div>
-            <div className="flex justify-between">
-              <p>Have An Account?</p>
-              <small>
-                <Link to="/login">Please Login</Link>
-              </small>
-            </div>
+
+            <label className="label">
+              Have An Account?
+              <Link to="/login" className="label-text-alt link link-hover">
+                Please Login
+              </Link>
+            </label>
           </form>
         </div>
       </div>

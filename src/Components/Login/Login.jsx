@@ -1,17 +1,16 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { IoLogoGoogle } from "react-icons/io5";
-import { FaFacebook } from "react-icons/fa";
-import { AuthContext } from "../FirebaseProvider/FirebaseProvider";
+
 import { useForm } from "react-hook-form";
+import SocialLogin from "../SocialLogin/SocialLogin";
+import useAuth from "../../hooks/useAuth";
 
 const Login = () => {
-  const { signInUser } = useContext(AuthContext);
+  const { signInUser, googleLogin } = useAuth();
 
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
@@ -72,20 +71,14 @@ const Login = () => {
             <div className="form-control mt-6">
               <button className="btn btn-primary">Login</button>
             </div>
-            <div className="flex justify-between">
-              <p>New Here?</p>
-              <small>
-                <Link to="/register">Create an account</Link>
-              </small>
-            </div>
+            <label className="label">
+              New Here?
+              <Link to="/register" className="label-text-alt link link-hover">
+                Create an account
+              </Link>
+            </label>
           </form>
-          <div className="text-center">
-            <p className="border-b-2 border-gray-600">Continue With</p>
-            <div className="flex items-center justify-center py-4">
-              <IoLogoGoogle className="text-4xl mr-4" />
-              <FaFacebook className="text-4xl" />
-            </div>
-          </div>
+          <SocialLogin />
         </div>
       </div>
     </div>
