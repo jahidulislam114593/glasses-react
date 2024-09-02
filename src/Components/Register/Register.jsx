@@ -10,13 +10,13 @@ const Register = () => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
     const { email, password, fullName, image } = data;
     createUser(email, password)
       .then((res) => {
+        // upadte user profile
         updateUserProfile(fullName, image).then(() => {
           navigate(from);
         });
