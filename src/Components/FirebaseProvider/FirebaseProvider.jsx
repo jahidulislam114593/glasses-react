@@ -9,6 +9,7 @@ import {
   FacebookAuthProvider,
   signOut,
   updateProfile,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 export const AuthContext = createContext(null);
 const FirebaseProvider = ({ children }) => {
@@ -56,12 +57,16 @@ const FirebaseProvider = ({ children }) => {
     setUser(null);
   };
 
+  // Forget Password Reset by Eamil
+  const passwordReset = (email) => {
+    return sendPasswordResetEmail(auth, email);
+  };
+
   //observer
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
-      } else {
       }
       setLoading(false);
     });
@@ -78,6 +83,7 @@ const FirebaseProvider = ({ children }) => {
     user,
     loading,
     updateUserProfile,
+    passwordReset,
   };
   return (
     <div>

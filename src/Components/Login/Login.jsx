@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import SocialLogin from "../SocialLogin/SocialLogin";
 import useAuth from "../../hooks/useAuth";
+import ForgetPassByEmail from "../ForgetPassByEmail/ForgetPassByEmail";
 
 const Login = () => {
   const { signInUser, user } = useAuth();
@@ -69,11 +70,8 @@ const Login = () => {
               {errors.password && (
                 <span className="text-red-500">This field is required</span>
               )}
-              <label className="label">
-                <a href="#" className="label-text-alt link link-hover">
-                  Forgot password?
-                </a>
-              </label>
+              {/* modal  */}
+              <ForgetPassByEmail />
             </div>
             <div className="form-control mt-6">
               <button className="btn btn-primary">Login</button>
