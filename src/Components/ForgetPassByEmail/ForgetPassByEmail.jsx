@@ -6,21 +6,26 @@ import "react-toastify/dist/ReactToastify.css";
 const ForgetPassByEmail = () => {
   const [email, setEmail] = useState("");
   const { passwordReset } = useAuth();
+
   const handleSubmit = () => {
     passwordReset(email)
       .then(() => {
         toast.success("Password reset email sent successfully!");
         document.getElementById("my_modal_5").close(); // Close the modal after success
       })
-      .catch(() => {
+      .catch((error) => {
         toast.error("Failed to send password reset email.");
         console.error(error);
       });
   };
+
+  const handleClose = () => {
+    document.getElementById("my_modal_5").close(); // Close the modal when clicking close
+  };
+
   return (
     <div>
       {/* Open the modal using document.getElementById('ID').showModal() method */}
-
       <label className="label">
         <a
           onClick={() => document.getElementById("my_modal_5").showModal()}
@@ -41,6 +46,14 @@ const ForgetPassByEmail = () => {
           <button onClick={handleSubmit} className="btn btn-primary ml-2">
             Submit
           </button>
+          <div className="modal-action">
+            {/* Use a div instead of form and handle close manually */}
+            <div>
+              <button className="btn" onClick={handleClose}>
+                Close
+              </button>
+            </div>
+          </div>
         </div>
       </dialog>
     </div>
