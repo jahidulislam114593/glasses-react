@@ -1,11 +1,21 @@
 import React, { useState } from "react";
 import useAuth from "../../hooks/useAuth";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ForgetPassByEmail = () => {
   const [email, setEmail] = useState("");
   const { passwordReset } = useAuth();
   const handleSubmit = () => {
-    passwordReset(email);
+    passwordReset(email)
+      .then(() => {
+        toast.success("Password reset email sent successfully!");
+        document.getElementById("my_modal_5").close(); // Close the modal after success
+      })
+      .catch(() => {
+        toast.error("Failed to send password reset email.");
+        console.error(error);
+      });
   };
   return (
     <div>
@@ -31,12 +41,6 @@ const ForgetPassByEmail = () => {
           <button onClick={handleSubmit} className="btn btn-primary ml-2">
             Submit
           </button>
-          <div className="modal-action">
-            <form method="dialog">
-              {/* if there is a button in form, it will close the modal */}
-              <button className="btn">Close</button>
-            </form>
-          </div>
         </div>
       </dialog>
     </div>
